@@ -7,22 +7,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-
+/**
+ * A program that draws out an H Tree of order n, input by the user. Only orders of 0 to 6 are
+ * allowed as anything more breaks the program.
+ */
 public class HTreeProject extends Application {
+
   @Override
   public void start(Stage primaryStage) {
     StackPane mainBodyPane = new StackPane();
     addTitle(mainBodyPane);
     TextField promptBox = addPromptBox(mainBodyPane);
     Text errorMessage = addErrorMessage(mainBodyPane);
-    mainBodyPane.getChildren().add(new Text()); //Dummy child (Text) is added to make sure our event runs smoothly
-    
+    // Dummy node (Text) is added to make sure our later event runs smoothly first time around
+    mainBodyPane.getChildren().add(new Text());
+    // Action when user presses enter key in the box
     promptBox.setOnKeyPressed((event) -> {
       if (event.getCode() == KeyCode.ENTER) {
         try {
@@ -38,66 +39,71 @@ public class HTreeProject extends Application {
         }
       }
     });
-    
-    mainBodyPane.getChildren();
-    
-    Scene scene = new Scene(mainBodyPane, 700, 700);
-
-    setupStage(primaryStage, scene);
-    }
-
-  private void addTitle(StackPane pane) {
-    Text title = new Text("H-Tree Fractal");
-    title.setTranslateY(50);
-    title.setFill(Color.LIGHTBLUE);
-    title.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.ITALIC, 30));
-    title.setStroke(Color.BLACK);
-    title.setStrokeWidth(1.5);
-    title.setUnderline(true);
-    title.setTranslateY(-250);
-    pane.getChildren().add(title);
-    
+    setupStage(primaryStage, new Scene(mainBodyPane));
   }
 
+  /**
+   * Helper method that adds the Title (of type Text) to a given pane.
+   */
+  private void addTitle(StackPane pane) {
+    Text title = new Text("H-Tree Fractal");
+    title.setStyle("-fx-font: italic bold 30px Arial; -fx-stroke: Black; -fx-stroke-width: 1.5; "
+        + "-fx-fill: LightBlue;-fx-underline: true; -fx-translate-y: -280px;");
+    pane.getChildren().add(title);
+  }
+
+  /**
+   * Helper method that adds an Error Message (of type Text) to a given pane. Also returns a
+   * reference to the Text.
+   */
   private Text addErrorMessage(Pane pane) {
     Text errorMessage = new Text();
-    errorMessage.setTranslateY(50);
-    errorMessage.setFill(Color.DARKRED);
-    errorMessage.setFont(Font.font("Arial", FontWeight.NORMAL, FontPosture.ITALIC, 13));
-    errorMessage.setTranslateY(200);
+    errorMessage
+        .setStyle("-fx-fill: DarkRed; -fx-font: italic 13px Arial; -fx-translate-y: 330px;");
     pane.getChildren().add(errorMessage);
     return errorMessage;
   }
 
+  /**
+   * Helper method that adds a Propmt Box (of type TextField) to a given pane. Also returns a
+   * reference to the TextField.
+   */
   private TextField addPromptBox(Pane pane) {
     TextField promptBox = new TextField();
-    promptBox.setMaxWidth(200);
+    promptBox
+        .setStyle("-fx-max-width: 200px; -fx-focus-traversable: false; -fx-translate-y: 300px");
     promptBox.setPromptText("Enter a number from 0 to 6");
-    promptBox.setFocusTraversable(false);
-    promptBox.setTranslateY(170); 
     pane.getChildren().add(promptBox);
     return promptBox;
   }
 
-  private void setupStage(Stage primaryStage, Scene scene) {
-    primaryStage.setTitle("Cosc211 | Final Project | H-Tree Fractal");
-    primaryStage.setMinWidth(700);
-    primaryStage.setMinHeight(700);
-    primaryStage.setMaxWidth(700);
-    primaryStage.setMaxHeight(700);
-    primaryStage.setScene(scene);
-    primaryStage.show();
-    
+  /**
+   * Helper method that sets up and displays a stage with a given scene.
+   */
+  private void setupStage(Stage stage, Scene scene) {
+    stage.setTitle("Cosc211 | Final Project | H-Tree Fractal");
+    stage.setWidth(800);
+    stage.setHeight(800);
+    stage.setResizable(false);
+    stage.setScene(scene);
+    stage.show();
   }
 
-  public StackPane createHTree(int order) {
+  /**
+   * Starter method that creates and returns an H Tree of the order requested. H Tree is returned in
+   * the form of a StackPane.
+   */
+  private StackPane createHTree(int order) {
     StackPane pane = new StackPane();
-    createHTree(pane, order, 80, 350, 300);
-   
+    createHTree(pane, order, 120, 400, 400);
     return pane;
   }
 
-  public void createHTree(Pane pane, int order, double size, double centerX, double centerY) {
+  /**
+   * Method that recursively calls itself to create an H Tree of the order required, given the size
+   * and center coordinates.
+   */
+  private void createHTree(Pane pane, int order, double size, double centerX, double centerY) {
     HBranch branch = new HBranch(size, centerX, centerY);
     pane.getChildren().add(branch);
     if (order == 0)

@@ -1,80 +1,94 @@
 package application;
 
-import java.util.ArrayList;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 
+/**
+ * An object that draws out an object given a size and coordinates in an xy plane.
+ */
 public class HBranch extends Region {
-  private DoubleProperty sizeProperty = new SimpleDoubleProperty(); 
-  private ArrayList<double[]> endPoints = new ArrayList<>();
+  /**
+   * Size of the H Branch. Specifically, half the distance on any one of the hands.
+   */
+  private double size;
+  /**
+   * An array containing the X and Y coordinates of the center of the H Branch.
+   */
   private double[] center = new double[2];
 
+  /**
+   * Default constructor for H Branch.
+   */
   public HBranch(double size, double centerX, double centerY) {
     center[0] = centerX;
     center[1] = centerY;
-    sizeProperty.set(size);
-    calculateEndPoints();
-
+    this.size = size;
     createHBranch();
   }
 
+  /**
+   * Helper method that maps out and creates the H Branch.
+   */
   private void createHBranch() {
-    Path rightSide = new Path(new MoveTo(getCenterX(), getCenterY()), 
+    Path rightSide = new Path(new MoveTo(getCenterX(), getCenterY()),
         new LineTo(getCenterX() + getSize(), getCenterY()),
-        new LineTo(getEndPointX(1), getEndPointY(1)),
-        new LineTo(getEndPointX(2), getEndPointY(2)));
+        new LineTo(getEndPointX(1), getEndPointY(1)), new LineTo(getEndPointX(2), getEndPointY(2)));
 
     Path leftSide = new Path(new MoveTo(getCenterX(), getCenterY()),
         new LineTo(getCenterX() - getSize(), getCenterY()),
-        new LineTo(getEndPointX(3), getEndPointY(3)),
-        new LineTo(getEndPointX(4), getEndPointY(4)));
+        new LineTo(getEndPointX(3), getEndPointY(3)), new LineTo(getEndPointX(4), getEndPointY(4)));
 
-    getChildren().addAll(rightSide,leftSide);
-   }
-
-  private void calculateEndPoints() {
-    endPoints.add(new double[] {getCenterX() + getSize(), getCenterY() - getSize()});
-    endPoints.add(new double[] {getCenterX() + getSize(), getCenterY() + getSize()});
-    endPoints.add(new double[] {getCenterX() - getSize(), getCenterY() - getSize()});
-    endPoints.add(new double[] {getCenterX() - getSize(), getCenterY() + getSize()});
-  }
-
-
-  /**
-   * Returns the x coordinate of the endpoint specified
-   * 
-   * @param endPoint Specify which endpoint is wanted, 1-4 (where 1 is the top right end, and the
-   *        rest are followed by a clockwise direction)
-   * @return
-   */
-  public double getEndPointX(int endPoint) {
-    return endPoints.get(endPoint - 1)[0];
+    getChildren().addAll(rightSide, leftSide);
   }
 
   /**
-   * Returns the y coordinate of the endpoint specified
-   * 
-   * @param endPoint Specify which endpoint is wanted, 1-4 (where 1 is the top right end, and the
-   *        rest are followed by a clockwise direction)
-   * @return
+   * Returns the X coordinate of the nth endpoint. Endpoints are numbered 1-4, where 1 is the top
+   * right end, and the rest are followed in a clockwise direction
    */
-  public double getEndPointY(int endPoint) {
-    return endPoints.get(endPoint - 1)[1];
+  public double getEndPointX(int n) {
+    return switch (n) {
+      case 1, 2 -> getCenterX() + size;
+      case 3, 4 -> getCenterX() - size;
+      default -> {
+        throw new IllegalArgumentException("Incorrect endpoint number entered");
+      }
+    };
   }
 
+  /**
+   * Returns the Y coordinate of the nth endpoint. Endpoints are numbered 1-4, where 1 is the top
+   * right end, and the rest are followed in a clockwise direction.
+   */
+  public double getEndPointY(int n) {
+    return switch (n) {
+      case 1, 4 -> getCenterY() - size;
+      case 2, 3 -> getCenterY() + size;
+      default -> {
+        throw new IllegalArgumentException("Incorrect endpoint number entered");
+      }
+    };
+  }
+
+  /**
+   * Returns the X coorinate of the center
+   */
   public double getCenterX() {
     return center[0];
   }
 
+  /**
+   * Returns the Y coorinate of the center
+   */
   public double getCenterY() {
     return center[1];
   }
-  
+
+  /**
+   * Returns the size oh the HTree
+   */
   public double getSize() {
-    return sizeProperty.doubleValue();
+    return size;
   }
 }
