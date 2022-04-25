@@ -20,7 +20,13 @@ Write a program that draws an H-tree, as shown in Figure 18.1.
 [Time Complexity Explanation](Exercise-18.35/Time_Complexity_of_H-Tree.pdf)
 
 ## Extra Note on the Project
-Only inputs of 0 to 6 are allowed. Any order of 7 or above always ends up crashing the program (because of too much space usage).
+Type in the value of order you want in the box and press ENTER. Only inputs of 0 to 6 are allowed. Any order of 7 or above always ends up crashing the program (because of too much space usage).
+## Running JavaFX Programs
+The following code needs to be added to the Run configuration under the VM Arguments:
+<br>
+<code>--module-path "\path\to\javafx-sdk-17.0.1\lib" --add-modules javafx.controls,javafx.fxml</code>
+<br>
+And uncheck the box that says "Use the -XstartOnFirstThread argument when launching with SWT".
 
 ## Some Notes on Testing
 There is no point in using JUnit here as this is a JavaFX project done mostly with GUI, and assertions dont really work with them. TestFX was suggested, but that involved way too many complications (its for Gradle & Maven projects, dependencies needed to be added .etc). Going with TextFX would have been a real waste of time as this project has just a few simple inputs and a few straightforward outputs. 
