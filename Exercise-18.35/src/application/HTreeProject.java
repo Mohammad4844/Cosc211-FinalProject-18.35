@@ -101,7 +101,8 @@ public class HTreeProject extends Application {
 
   /**
    * Method that recursively calls itself to create an H Tree of the order required, given the size
-   * and center coordinates.
+   * and center coordinates. Time complexity of method is exponential / O(2^n), details of
+   * explanation is in Time_Complexity_of_H-Tree.pdf (linked in the README file)
    */
   private void createHTree(Pane pane, int order, double size, double centerX, double centerY) {
     HBranch branch = new HBranch(size, centerX, centerY);
