@@ -17,7 +17,7 @@ Write a program that draws an H-tree, as shown in Figure 18.1.
 <br>
 [H-Branch](Exercise-18.35/src/application/HBranch.java)
 <br>
-[Time Complexity Explanation](Exercise-18.35/Time_Complexity_of_H-Tree.pdf)
+[Time Complexity Explanation of createHTree() method](Exercise-18.35/Time_Complexity_of_H-Tree.pdf)
 
 ## Extra Note on the Project
 Type in the value of order you want in the box and press ENTER. Only inputs of 0 to 6 are allowed. Any order of 7 or above always ends up crashing the program (because of too much space usage).
