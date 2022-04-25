@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -13,7 +14,7 @@ import javafx.scene.text.Text;
  * A program that draws out an H Tree of order n, input by the user. Only orders of 0 to 6 are
  * allowed as anything more breaks the program.
  */
-public class HTreeProject extends Application {
+public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
@@ -30,12 +31,12 @@ public class HTreeProject extends Application {
           int order = Integer.parseInt(promptBox.getText());
           if (order < 0 || order > 6)
             throw new Exception();
-          mainBodyPane.getChildren().remove(3);
+          mainBodyPane.getChildren().remove(3); // Remove the previous H-Tree
           createHTree(order);
           mainBodyPane.getChildren().add(createHTree(order));
-          errorMessage.setText("");
+          errorMessage.setVisible(false);
         } catch (Exception exception) {
-          errorMessage.setText("*You entered an incorrect value");
+          errorMessage.setVisible(true);
         }
       }
     });
@@ -60,18 +61,21 @@ public class HTreeProject extends Application {
     Text errorMessage = new Text();
     errorMessage
         .setStyle("-fx-fill: DarkRed; -fx-font: italic 13px Arial; -fx-translate-y: 330px;");
+    errorMessage.setVisible(false);
+    errorMessage.setText("*You entered an incorrect value");
     pane.getChildren().add(errorMessage);
     return errorMessage;
   }
 
   /**
-   * Helper method that adds a Propmt Box (of type TextField) to a given pane. Also returns a
+   * Helper method that adds a Prompt Box (of type TextField) to a given pane. Also returns a
    * reference to the TextField.
    */
   private TextField addPromptBox(Pane pane) {
     TextField promptBox = new TextField();
     promptBox
-        .setStyle("-fx-max-width: 200px; -fx-focus-traversable: false; -fx-translate-y: 300px");
+        .setStyle("-fx-max-width: 200px; -fx-focus-traversable: false; -fx-translate-y: 300px; "
+            + "-fx-border-width: 1px; -fx-border-color: darkgrey; -fx-border-radius: 3px; ");
     promptBox.setPromptText("Enter a number from 0 to 6");
     pane.getChildren().add(promptBox);
     return promptBox;
@@ -101,8 +105,9 @@ public class HTreeProject extends Application {
 
   /**
    * Method that recursively calls itself to create an H Tree of the order required, given the size
-   * and center coordinates. Time complexity of method is exponential / O(2^n), details of
-   * explanation is in Time_Complexity_of_H-Tree.pdf (linked in the README file)
+   * and center coordinates. This method uses tail-recursion. Time complexity of method is
+   * exponential / O(2^n), details of explanation is in Time_Complexity_of_H-Tree.pdf (linked in the
+   * README file)
    */
   private void createHTree(Pane pane, int order, double size, double centerX, double centerY) {
     HBranch branch = new HBranch(size, centerX, centerY);

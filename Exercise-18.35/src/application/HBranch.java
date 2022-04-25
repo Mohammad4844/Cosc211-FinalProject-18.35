@@ -6,7 +6,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 
 /**
- * An object that draws out an object given a size and coordinates in an xy plane.
+ * An object that draws out an H-Branch given a size and coordinates in an xy plane.
  */
 public class HBranch extends Region {
   /**
@@ -33,11 +33,11 @@ public class HBranch extends Region {
    */
   private void createHBranch() {
     Path rightSide = new Path(new MoveTo(getCenterX(), getCenterY()),
-        new LineTo(getCenterX() + getSize(), getCenterY()),
+        new LineTo(getCenterX() + size, getCenterY()),
         new LineTo(getEndPointX(1), getEndPointY(1)), new LineTo(getEndPointX(2), getEndPointY(2)));
 
     Path leftSide = new Path(new MoveTo(getCenterX(), getCenterY()),
-        new LineTo(getCenterX() - getSize(), getCenterY()),
+        new LineTo(getCenterX() - size, getCenterY()),
         new LineTo(getEndPointX(3), getEndPointY(3)), new LineTo(getEndPointX(4), getEndPointY(4)));
 
     getChildren().addAll(rightSide, leftSide);
@@ -85,9 +85,6 @@ public class HBranch extends Region {
     return center[1];
   }
 
-  /**
-   * Returns the size oh the HTree
-   */
   public double getSize() {
     return size;
   }
