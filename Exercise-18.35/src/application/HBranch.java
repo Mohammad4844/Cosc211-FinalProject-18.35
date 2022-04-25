@@ -33,12 +33,12 @@ public class HBranch extends Region {
    */
   private void createHBranch() {
     Path rightSide = new Path(new MoveTo(getCenterX(), getCenterY()),
-        new LineTo(getCenterX() + size, getCenterY()),
-        new LineTo(getEndPointX(1), getEndPointY(1)), new LineTo(getEndPointX(2), getEndPointY(2)));
+        new LineTo(getCenterX() + size, getCenterY()), new LineTo(getEndPointX(1), getEndPointY(1)),
+        new LineTo(getEndPointX(2), getEndPointY(2)));
 
     Path leftSide = new Path(new MoveTo(getCenterX(), getCenterY()),
-        new LineTo(getCenterX() - size, getCenterY()),
-        new LineTo(getEndPointX(3), getEndPointY(3)), new LineTo(getEndPointX(4), getEndPointY(4)));
+        new LineTo(getCenterX() - size, getCenterY()), new LineTo(getEndPointX(3), getEndPointY(3)),
+        new LineTo(getEndPointX(4), getEndPointY(4)));
 
     getChildren().addAll(rightSide, leftSide);
   }
