@@ -13,7 +13,7 @@ An H-tree (introduced at the beginning of this chapter in Figure 18.1) is a frac
 Write a program that draws an H-tree, as shown in Figure 18.1.
 
 ## Quick Links to Files
-[Main Program File / H-Tree](Exercise-18.35/src/application/HTreeProject.java)
+[Main Program File / H-Tree](Exercise-18.35/src/application/Main.java)
 <br>
 [H-Branch](Exercise-18.35/src/application/HBranch.java)
 <br>
