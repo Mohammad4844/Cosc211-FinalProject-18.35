@@ -17,12 +17,12 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) {
-    StackPane mainBodyPane = new StackPane();
-    addTitle(mainBodyPane);
-    TextField promptBox = addPromptBox(mainBodyPane);
-    Text errorMessage = addErrorMessage(mainBodyPane);
+    StackPane pane = new StackPane();
+    addTitle(pane);
+    TextField promptBox = addPromptBox(pane);
+    Text errorMessage = addErrorMessage(pane);
     // Dummy node (Text) is added to make sure our later event runs smoothly first time around
-    mainBodyPane.getChildren().add(new Text());
+    pane.getChildren().add(new Text());
     // Action when user presses enter key in the box
     promptBox.setOnKeyPressed((event) -> {
       if (event.getCode() == KeyCode.ENTER) {
@@ -30,16 +30,16 @@ public class Main extends Application {
           int order = Integer.parseInt(promptBox.getText());
           if (order < 0 || order > 6)
             throw new Exception();
-          mainBodyPane.getChildren().remove(3); // Remove the previous H-Tree
+          pane.getChildren().remove(3); // Remove the previous H-Tree
           createHTree(order);
-          mainBodyPane.getChildren().add(createHTree(order));
+          pane.getChildren().add(createHTree(order));
           errorMessage.setVisible(false);
         } catch (Exception exception) {
           errorMessage.setVisible(true);
         }
       }
     });
-    setupStage(primaryStage, new Scene(mainBodyPane));
+    setupStage(primaryStage, new Scene(pane));
   }
 
   /**
